@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #141413;
+  --surface: #1c1c1a;
+  --text-primary: #faf9f5;
+  --text-secondary: #b0aea5;
+  --border: #e8e6dc20;
+  --orange: #d97757;
+  --blue: #6a9bcc;
+  --green: #788c5d;
+  --red: #c0392b;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: #141413;
+  color: #faf9f5;
+  min-height: 100vh;
+  overscroll-behavior: none;
+  font-family: 'Lora', Georgia, serif;
+}
+
+.font-poppins {
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.font-lora {
+  font-family: 'Lora', Georgia, serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(232, 230, 220, 0.2);
+  border-radius: 4px;
+}

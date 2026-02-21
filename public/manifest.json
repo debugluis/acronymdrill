@@ -1,0 +1,14 @@
+{
+  "name": "AcronymDrill",
+  "short_name": "AcronymDrill",
+  "description": "CompTIA Security+ SY0-701 Acronym Study App",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#141413",
+  "theme_color": "#d97757",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
