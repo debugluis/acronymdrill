@@ -19,8 +19,8 @@ const config: Config = {
         red: '#c0392b',
       },
       fontFamily: {
-        poppins: ['Poppins', 'Arial', 'sans-serif'],
-        lora: ['Lora', 'Georgia', 'serif'],
+        sans: ['var(--font-geist-sans)', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'monospace'],
       },
     },
   },

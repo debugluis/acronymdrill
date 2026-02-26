@@ -65,7 +65,7 @@ export function SwipeTrueFalse({ question, onAnswer }: SwipeTrueFalseProps) {
           className="w-full max-w-sm bg-[#1c1c1a] rounded-2xl p-6 border border-[#e8e6dc20] cursor-grab active:cursor-grabbing"
           whileDrag={{ scale: 1.02 }}
         >
-          <p className="text-center text-lg font-semibold text-[#faf9f5] font-lora leading-snug">
+          <p className="text-center text-lg font-semibold text-[#faf9f5] leading-snug">
             {statement}
           </p>
         </motion.div>

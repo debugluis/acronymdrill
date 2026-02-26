@@ -15,15 +15,13 @@ export async function POST(req: NextRequest) {
 
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 256,
+      max_tokens: 128,
       messages: [
         {
           role: 'user',
-          content: `You are helping someone study for CompTIA Security+ SY0-701.
-They are learning the acronym ${id} (${fullName}).
-The standard explanation isn't clicking for them.
-Give them a completely different, simpler explanation in 2-3 sentences maximum.
-Use a real-world analogy if possible. Plain English only, no jargon.`,
+          content: `You are a CompTIA Security+ SY0-701 study assistant.
+Re-explain ${id} (${fullName}) in exactly 2 short sentences: one defining what the letters mean, one combining a quick example and its exam relevance.
+No headers. No filler.`,
         },
       ],
     })

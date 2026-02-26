@@ -12,6 +12,7 @@ import { AwarenessStats } from '@/components/home/AwarenessStats'
 import { QuickLaunch } from '@/components/home/QuickLaunch'
 import { BottomSheet } from '@/components/ui/BottomSheet'
 import { UserProfile } from '@/types'
+import { Smartphone, X } from 'lucide-react'
 
 export default function HomePage() {
   const { user, loading: authLoading } = useAuth()
@@ -56,17 +57,17 @@ export default function HomePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#141413] px-6 gap-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-[#d97757] font-poppins mb-2">AcronymDrill</h1>
-          <p className="text-[#b0aea5] font-lora">Know every acronym. Pass the exam.</p>
+          <h1 className="text-4xl font-bold text-[#d97757] font-sans mb-2">AcronymDrill</h1>
+          <p className="text-[#b0aea5]">Know every acronym. Pass the exam.</p>
         </div>
         <div className="text-center space-y-4">
-          <p className="text-[#faf9f5] font-lora text-sm">
+          <p className="text-[#faf9f5] text-sm">
             Study all {allAcronyms.length} CompTIA Security+ SY0-701 acronyms with spaced repetition.
           </p>
         </div>
         <button
           onClick={() => signInWithGoogle()}
-          className="w-full max-w-xs py-4 bg-[#d97757] hover:bg-[#c86846] text-white rounded-xl font-semibold font-poppins flex items-center justify-center gap-3 transition-colors"
+          className="w-full max-w-xs py-4 bg-[#d97757] hover:bg-[#c86846] text-white rounded-xl font-semibold font-sans flex items-center justify-center gap-3 transition-colors"
         >
           Sign in with Google
         </button>
@@ -99,13 +100,13 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
       {showInstallBanner && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-[#d97757] text-white px-4 py-3 flex items-center justify-between text-sm max-w-lg mx-auto">
-          <span>📱 Tap Share → Add to Home Screen for the best experience</span>
-          <button onClick={dismissBanner} className="ml-3 font-bold">✕</button>
+          <span className="flex items-center gap-2"><Smartphone className="w-4 h-4 flex-shrink-0" /> Tap Share → Add to Home Screen for the best experience</span>
+          <button onClick={dismissBanner} className="ml-3"><X className="w-4 h-4" /></button>
         </div>
       )}
 
       <header className="flex items-center justify-between px-4 py-4 border-b border-[#e8e6dc20]">
-        <h1 className="text-xl font-bold text-[#d97757] font-poppins">AcronymDrill</h1>
+        <h1 className="text-xl font-bold text-[#d97757] font-sans">AcronymDrill</h1>
         <button
           onClick={() => setShowUserMenu(true)}
           className="w-9 h-9 rounded-full overflow-hidden border-2 border-[#e8e6dc20]"

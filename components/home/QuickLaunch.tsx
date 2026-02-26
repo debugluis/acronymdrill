@@ -1,6 +1,7 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { HapticButton } from '@/components/ui/HapticButton'
+import { Brain, ClipboardList, Zap } from 'lucide-react'
 
 export function QuickLaunch() {
   const router = useRouter()
@@ -14,7 +15,7 @@ export function QuickLaunch() {
           onClick={() => router.push('/train')}
         >
           <div className="flex flex-col items-center gap-1">
-            <span className="text-2xl">🃏</span>
+            <Brain className="w-6 h-6" />
             <span>Train</span>
           </div>
         </HapticButton>
@@ -24,7 +25,7 @@ export function QuickLaunch() {
           onClick={() => router.push('/test')}
         >
           <div className="flex flex-col items-center gap-1">
-            <span className="text-2xl">📝</span>
+            <ClipboardList className="w-6 h-6" />
             <span>Test</span>
           </div>
         </HapticButton>
@@ -34,7 +35,9 @@ export function QuickLaunch() {
         className="w-full py-3 text-sm"
         onClick={() => router.push('/test?mode=hard')}
       >
-        ⚡ Hard Mode
+        <span className="flex items-center justify-center gap-2">
+          <Zap className="w-4 h-4" /> Hard Mode
+        </span>
       </HapticButton>
     </div>
   )

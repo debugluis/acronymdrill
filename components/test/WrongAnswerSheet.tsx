@@ -3,6 +3,7 @@ import { Question } from '@/types'
 import { AcronymCard } from '@/components/training/AcronymCard'
 import { HapticButton } from '@/components/ui/HapticButton'
 import { useState } from 'react'
+import { XCircle, GraduationCap } from 'lucide-react'
 
 interface WrongAnswerSheetProps {
   question: Question
@@ -29,20 +30,20 @@ export function WrongAnswerSheet({ question, onNext }: WrongAnswerSheetProps) {
 
   return (
     <div className="flex flex-col items-center justify-center h-full px-6 gap-6 text-center">
-      <div className="text-5xl">❌</div>
+      <XCircle className="w-16 h-16 text-[#c0392b]" />
       <div className="w-full bg-[#1c1c1a] rounded-2xl p-5 border border-[#788c5d]/40">
         <p className="text-xs text-[#b0aea5] mb-1">Correct Answer</p>
-        <p className="text-xl font-bold text-[#788c5d] font-poppins">{question.correctAnswer}</p>
+        <p className="text-xl font-bold text-[#788c5d] font-sans">{question.correctAnswer}</p>
         {question.type === 1 && (
-          <p className="text-sm text-[#faf9f5] mt-1 font-lora">{question.acronym.fullName}</p>
+          <p className="text-sm text-[#faf9f5] mt-1">{question.acronym.fullName}</p>
         )}
         {question.type === 2 && (
-          <p className="text-sm text-[#faf9f5] mt-1 font-lora">{question.acronym.id}</p>
+          <p className="text-sm text-[#faf9f5] mt-1">{question.acronym.id}</p>
         )}
       </div>
       <div className="bg-[#141413] rounded-xl p-4 text-left w-full">
-        <p className="text-xs text-[#b0aea5] mb-1">📝 Exam Tip</p>
-        <p className="text-sm text-[#faf9f5] font-lora leading-relaxed">{question.acronym.examTip}</p>
+        <p className="text-xs text-[#b0aea5] mb-1 flex items-center gap-1"><GraduationCap className="w-3.5 h-3.5" /> Exam Tip</p>
+        <p className="text-sm text-[#faf9f5] leading-relaxed">{question.acronym.examTip}</p>
       </div>
       <div className="w-full space-y-3">
         <HapticButton

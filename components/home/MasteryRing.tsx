@@ -37,7 +37,7 @@ export function MasteryRing({ percent, total, mastered }: MasteryRingProps) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-4xl font-bold text-[#d97757] font-poppins">{Math.round(percent)}%</span>
+          <span className="text-4xl font-bold text-[#d97757] font-sans">{Math.round(percent)}%</span>
           <span className="text-sm text-[#b0aea5] mt-1">mastery</span>
           <span className="text-xs text-[#b0aea5]">{mastered}/{total}</span>
         </div>

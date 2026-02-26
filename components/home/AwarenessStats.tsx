@@ -37,19 +37,19 @@ export function AwarenessStats({
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-[#1c1c1a] rounded-xl p-3 border border-[#e8e6dc20]">
           <p className="text-xs text-[#b0aea5]">Asked about</p>
-          <p className="text-lg font-semibold text-[#faf9f5] font-poppins">{tested} / {totalAcronyms}</p>
+          <p className="text-lg font-semibold text-[#faf9f5] font-sans">{tested} / {totalAcronyms}</p>
         </div>
         <div className="bg-[#1c1c1a] rounded-xl p-3 border border-[#e8e6dc20]">
           <p className="text-xs text-[#b0aea5]">Cards seen</p>
-          <p className="text-lg font-semibold text-[#faf9f5] font-poppins">{seen} / {totalAcronyms}</p>
+          <p className="text-lg font-semibold text-[#faf9f5] font-sans">{seen} / {totalAcronyms}</p>
         </div>
         <div className="bg-[#1c1c1a] rounded-xl p-3 border border-[#e8e6dc20]">
           <p className="text-xs text-[#b0aea5]">Total study time</p>
-          <p className="text-lg font-semibold text-[#faf9f5] font-poppins">{formatTime(totalStudyMinutes)}</p>
+          <p className="text-lg font-semibold text-[#faf9f5] font-sans">{formatTime(totalStudyMinutes)}</p>
         </div>
         <div className="bg-[#1c1c1a] rounded-xl p-3 border border-[#e8e6dc20]">
           <p className="text-xs text-[#b0aea5]">Mastered</p>
-          <p className="text-lg font-semibold text-[#faf9f5] font-poppins">
+          <p className="text-lg font-semibold text-[#faf9f5] font-sans">
             {Array.from(progressMap.values()).filter((p) => p.masteryLevel === 'mastered').length}
           </p>
         </div>

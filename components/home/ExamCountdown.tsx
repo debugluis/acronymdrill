@@ -53,7 +53,7 @@ export function ExamCountdown({ examDate, userId, onUpdate }: ExamCountdownProps
   if (daysLeft !== null && daysLeft > 0) {
     return (
       <button onClick={() => setEditing(true)} className="w-full px-4 py-3 text-center">
-        <p className="text-[#d97757] font-semibold font-poppins text-lg">
+        <p className="text-[#d97757] font-semibold font-sans text-lg">
           {daysLeft} day{daysLeft !== 1 ? 's' : ''} until your exam
         </p>
         <p className="text-[#b0aea5] text-xs mt-0.5">tap to change date</p>
@@ -64,7 +64,7 @@ export function ExamCountdown({ examDate, userId, onUpdate }: ExamCountdownProps
   if (daysLeft !== null && daysLeft <= 0) {
     return (
       <div className="px-4 py-3 text-center">
-        <p className="text-[#788c5d] font-semibold font-poppins">Exam day is here — you've got this!</p>
+        <p className="text-[#788c5d] font-semibold font-sans">Exam day is here — you've got this!</p>
       </div>
     )
   }

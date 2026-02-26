@@ -41,7 +41,7 @@ export function BottomSheet({ isOpen, onClose, children, title }: BottomSheetPro
           >
             <div className="w-12 h-1 bg-[#e8e6dc20] rounded-full mx-auto mb-4" />
             {title && (
-              <h2 className="text-lg font-semibold text-[#faf9f5] mb-4 font-poppins">{title}</h2>
+              <h2 className="text-lg font-semibold text-[#faf9f5] mb-4 font-sans">{title}</h2>
             )}
             {children}
           </motion.div>

@@ -17,6 +17,7 @@ import { ProgressBar } from '@/components/test/ProgressBar'
 import { HapticButton } from '@/components/ui/HapticButton'
 import { AcronymEntry, Question, AcronymCategory } from '@/types'
 import { saveSession, updateTotalStudyTime } from '@/lib/firestore'
+import { Zap, ChevronLeft } from 'lucide-react'
 
 type Phase = 'config' | 'testing' | 'wrong-answer' | 'results'
 
@@ -36,7 +37,7 @@ function TestContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const isHardMode = searchParams.get('mode') === 'hard'
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const { progressMap, recordAnswer } = useProgress(user?.uid ?? null)
   const { allAcronyms } = useAcronyms()
 
@@ -179,6 +180,14 @@ function TestContent() {
     setPhase('results')
   }, [testState, user, isHardMode])
 
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#141413]">
+        <div className="w-10 h-10 border-2 border-[#d97757] border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+
   if (!user) {
     router.push('/')
     return null
@@ -194,7 +203,7 @@ function TestContent() {
     return (
       <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-          <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Results</h1>
+          <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Results</h1>
         </header>
         <div className="flex-1">
           <ResultsScreen
@@ -213,7 +222,7 @@ function TestContent() {
     return (
       <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-          <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Incorrect</h1>
+          <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Incorrect</h1>
         </header>
         <div className="flex-1">
           <WrongAnswerSheet question={question} onNext={advanceQuestion} />
@@ -234,12 +243,12 @@ function TestContent() {
             onClick={() => {
               finishTest()
             }}
-            className="text-[#b0aea5] text-sm"
+            className="text-[#b0aea5] text-sm flex items-center gap-1"
           >
-            ← Exit
+            <ChevronLeft className="w-4 h-4" /> Exit
           </button>
-          <span className="text-sm text-[#b0aea5] font-poppins">
-            {isHardMode ? '⚡ Hard Mode' : 'Test'}
+          <span className="text-sm text-[#b0aea5] font-sans flex items-center gap-1">
+            {isHardMode ? <><Zap className="w-3.5 h-3.5" /> Hard Mode</> : 'Test'}
           </span>
           <span className="text-sm text-[#d97757] font-semibold">
             {testState.correct}/{testState.currentIndex}
@@ -265,8 +274,8 @@ function TestContent() {
   return (
     <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
       <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-        <button onClick={() => router.push('/')} className="text-[#b0aea5]">← Home</button>
-        <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Configure Test</h1>
+        <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
+        <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Configure Test</h1>
       </header>
 
       <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">

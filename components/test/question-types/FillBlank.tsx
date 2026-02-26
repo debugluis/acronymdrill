@@ -29,8 +29,8 @@ export function FillBlank({ question, onAnswer }: FillBlankProps) {
       <div className="text-center py-4">
         <p className="text-xs text-[#b0aea5] mb-3 uppercase tracking-wide">Fill in the acronym</p>
         <div className="bg-[#1c1c1a] rounded-xl border border-[#e8e6dc20] p-5">
-          <p className="text-xl font-semibold text-[#faf9f5] font-lora">
-            <span className={`font-bold font-poppins text-2xl ${answered ? (isCorrect ? 'text-[#788c5d]' : 'text-[#c0392b]') : 'text-[#d97757]'}`}>
+          <p className="text-xl font-semibold text-[#faf9f5]">
+            <span className={`font-bold font-sans text-2xl ${answered ? (isCorrect ? 'text-[#788c5d]' : 'text-[#c0392b]') : 'text-[#d97757]'}`}>
               {answered ? question.correctAnswer : '___'}
             </span>
             <span className="text-[#b0aea5]"> = </span>
@@ -49,7 +49,7 @@ export function FillBlank({ question, onAnswer }: FillBlankProps) {
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
             placeholder="Type the acronym..."
             autoFocus
-            className="w-full bg-[#1c1c1a] border border-[#e8e6dc20] rounded-xl px-4 py-3 text-[#faf9f5] text-center text-xl font-bold font-poppins tracking-widest focus:outline-none focus:border-[#d97757]"
+            className="w-full bg-[#1c1c1a] border border-[#e8e6dc20] rounded-xl px-4 py-3 text-[#faf9f5] text-center text-xl font-bold font-sans tracking-widest focus:outline-none focus:border-[#d97757]"
           />
           <button
             onClick={handleSubmit}

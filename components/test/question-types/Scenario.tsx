@@ -31,7 +31,7 @@ export function Scenario({ question, onAnswer, answered, selectedAnswer }: Scena
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-2">Scenario — pick the best answer</p>
       </div>
       <div className="bg-[#1c1c1a] rounded-xl border border-[#6a9bcc]/40 p-4">
-        <p className="text-[#faf9f5] font-lora text-sm leading-relaxed">{question.scenarioText}</p>
+        <p className="text-[#faf9f5] text-sm leading-relaxed">{question.scenarioText}</p>
         <p className="text-[#6a9bcc] text-xs mt-2">Which technology best applies here?</p>
       </div>
       <div className="flex-1 flex flex-col gap-3">
@@ -40,7 +40,7 @@ export function Scenario({ question, onAnswer, answered, selectedAnswer }: Scena
             key={option}
             onClick={() => handleSelect(option)}
             disabled={answered}
-            className={`w-full text-left px-4 py-4 rounded-xl border transition-all font-bold font-poppins text-lg ${getOptionStyle(option)}`}
+            className={`w-full text-left px-4 py-4 rounded-xl border transition-all font-bold font-sans text-lg ${getOptionStyle(option)}`}
           >
             {option}
           </button>

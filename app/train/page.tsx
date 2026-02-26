@@ -11,12 +11,13 @@ import { BottomSheet } from '@/components/ui/BottomSheet'
 import { HapticButton } from '@/components/ui/HapticButton'
 import { AcronymEntry } from '@/types'
 import { saveSession, updateTotalStudyTime } from '@/lib/firestore'
+import { Shuffle, Target, ChevronLeft } from 'lucide-react'
 
 type Phase = 'select' | 'training' | 'complete'
 
 export default function TrainPage() {
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const { progressMap, swipe } = useProgress(user?.uid ?? null)
   const { allAcronyms } = useAcronyms()
   const [phase, setPhase] = useState<Phase>('select')
@@ -81,6 +82,14 @@ export default function TrainPage() {
     setDeck([])
   }
 
+  if (authLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#141413]">
+        <div className="w-10 h-10 border-2 border-[#d97757] border-t-transparent rounded-full animate-spin" />
+      </div>
+    )
+  }
+
   if (!user) {
     router.push('/')
     return null
@@ -90,8 +99,8 @@ export default function TrainPage() {
     return (
       <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-          <button onClick={() => router.push('/')} className="text-[#b0aea5]">← Home</button>
-          <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Training Complete</h1>
+          <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
+          <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Training Complete</h1>
         </header>
         <div className="flex-1">
           <TrainingComplete stats={finalStats} onTrainAgain={handleTrainAgain} />
@@ -104,8 +113,8 @@ export default function TrainPage() {
     return (
       <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-          <button onClick={() => setPhase('select')} className="text-[#b0aea5]">← Back</button>
-          <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Training</h1>
+          <button onClick={() => setPhase('select')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Back</button>
+          <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Training</h1>
         </header>
         <div className="flex-1 flex flex-col overflow-hidden">
           <SwipeContainer
@@ -121,12 +130,12 @@ export default function TrainPage() {
   return (
     <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
       <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
-        <button onClick={() => router.push('/')} className="text-[#b0aea5]">← Home</button>
-        <h1 className="text-lg font-semibold text-[#faf9f5] font-poppins">Choose Training Mode</h1>
+        <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
+        <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Choose Training Mode</h1>
       </header>
 
       <div className="flex-1 flex flex-col justify-center px-6 gap-4">
-        <p className="text-[#b0aea5] text-sm text-center font-lora">
+        <p className="text-[#b0aea5] text-sm text-center">
           Each session covers 20 cards. Swipe right if you&apos;re confident, left if you need more practice.
         </p>
 
@@ -136,10 +145,10 @@ export default function TrainPage() {
             className="w-full bg-[#1c1c1a] border border-[#e8e6dc20] rounded-2xl p-5 text-left hover:border-[#d97757] transition-colors"
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-2xl">🎲</span>
-              <h2 className="text-lg font-bold text-[#faf9f5] font-poppins">Random</h2>
+              <Shuffle className="w-6 h-6 text-[#d97757]" />
+              <h2 className="text-lg font-bold text-[#faf9f5] font-sans">Random</h2>
             </div>
-            <p className="text-sm text-[#b0aea5] font-lora">20 random acronyms from any domain or category</p>
+            <p className="text-sm text-[#b0aea5]">20 random acronyms from any domain or category</p>
           </button>
 
           <button
@@ -147,10 +156,10 @@ export default function TrainPage() {
             className="w-full bg-[#1c1c1a] border border-[#e8e6dc20] rounded-2xl p-5 text-left hover:border-[#d97757] transition-colors"
           >
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-2xl">🎯</span>
-              <h2 className="text-lg font-bold text-[#faf9f5] font-poppins">Reinforcement</h2>
+              <Target className="w-6 h-6 text-[#d97757]" />
+              <h2 className="text-lg font-bold text-[#faf9f5] font-sans">Reinforcement</h2>
             </div>
-            <p className="text-sm text-[#b0aea5] font-lora">Focuses on your weakest and unseen acronyms</p>
+            <p className="text-sm text-[#b0aea5]">Focuses on your weakest and unseen acronyms</p>
           </button>
         </div>
       </div>

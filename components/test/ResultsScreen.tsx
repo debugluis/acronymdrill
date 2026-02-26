@@ -45,7 +45,7 @@ export function ResultsScreen({ correct, total, durationSeconds, domainResults }
       {/* Header */}
       <div className="text-center px-6 pt-8 pb-4">
         <p className="text-[#b0aea5] text-sm mb-2">Your Score</p>
-        <p className={`text-6xl font-bold font-poppins ${gradeColor}`}>{pct}%</p>
+        <p className={`text-6xl font-bold font-sans ${gradeColor}`}>{pct}%</p>
         <p className="text-2xl font-semibold text-[#faf9f5] mt-1">{correct} / {total}</p>
         <p className="text-[#b0aea5] text-sm mt-2">Time: {formatTime(durationSeconds)}</p>
       </div>

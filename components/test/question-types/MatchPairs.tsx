@@ -11,7 +11,9 @@ interface MatchPairsProps {
 export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
   const pairs = question.pairItems ?? []
   const acronyms = pairs.map((p) => p.left)
-  const definitions = pairs.map((p) => p.right).sort(() => Math.random() - 0.5)
+  const [definitions] = useState(() =>
+    pairs.map((p) => p.right).sort(() => Math.random() - 0.5)
+  )
 
   const [selectedAcronym, setSelectedAcronym] = useState<string | null>(null)
   const [matched, setMatched] = useState<Record<string, string>>({})
@@ -74,7 +76,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
             <button
               key={acr}
               onClick={() => handleAcronymClick(acr)}
-              className={`w-full py-3 px-2 rounded-xl border text-sm font-bold font-poppins transition-all ${getAcrStyle(acr)}`}
+              className={`w-full py-3 px-2 rounded-xl border text-sm font-bold font-sans transition-all ${getAcrStyle(acr)}`}
             >
               {acr}
             </button>
@@ -86,7 +88,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
             <button
               key={def}
               onClick={() => handleDefClick(def)}
-              className={`w-full py-3 px-2 rounded-xl border text-xs font-lora transition-all text-left leading-tight ${getDefStyle(def)}`}
+              className={`w-full py-3 px-2 rounded-xl border text-xs transition-all text-left leading-tight ${getDefStyle(def)}`}
             >
               {def}
             </button>
