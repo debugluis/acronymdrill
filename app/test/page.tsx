@@ -45,6 +45,7 @@ function TestContent() {
   const [testState, setTestState] = useState<TestState | null>(null)
   const [filterDomain, setFilterDomain] = useState<string>('all')
   const [filterLength, setFilterLength] = useState<20 | 35 | 50>(35)
+  const [hardModeConfig, setHardModeConfig] = useState(false)
 
   // Auto-start hard mode
   useEffect(() => {
@@ -258,7 +259,7 @@ function TestContent() {
           current={remaining}
           total={testState.questions.length}
         />
-        <div className="flex-1 overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden">
           <QuestionRenderer
             question={question}
             onAnswer={handleAnswer}
@@ -278,8 +279,29 @@ function TestContent() {
         <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Configure Test</h1>
       </header>
 
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-6">
-        <div className="space-y-3">
+      <div className="flex-1 px-4 py-6 space-y-6">
+        {/* Hard Mode toggle */}
+        <button
+          onClick={() => setHardModeConfig((v) => !v)}
+          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl border transition-all ${
+            hardModeConfig
+              ? 'bg-[#d97757]/10 border-[#d97757] text-[#d97757]'
+              : 'bg-[#1c1c1a] border-[#e8e6dc20] text-[#b0aea5]'
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            <Zap className={`w-4 h-4 ${hardModeConfig ? 'text-[#d97757]' : 'text-[#b0aea5]'}`} />
+            <div className="text-left">
+              <p className={`text-sm font-semibold ${hardModeConfig ? 'text-[#d97757]' : 'text-[#faf9f5]'}`}>Hard Mode</p>
+              <p className="text-xs text-[#b0aea5]">Weighted by your weakest acronyms</p>
+            </div>
+          </div>
+          <div className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${hardModeConfig ? 'bg-[#d97757]' : 'bg-[#e8e6dc20]'}`}>
+            <div className={`w-4 h-4 rounded-full bg-white transition-transform ${hardModeConfig ? 'translate-x-4' : 'translate-x-0'}`} />
+          </div>
+        </button>
+
+        <div className={`space-y-3 transition-opacity ${hardModeConfig ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
           <h2 className="text-sm font-semibold text-[#b0aea5] uppercase tracking-wider">Domain Filter</h2>
           <div className="grid grid-cols-3 gap-2">
             {['all', '1', '2', '3', '4', '5'].map((d) => (
@@ -298,7 +320,7 @@ function TestContent() {
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className={`space-y-3 transition-opacity ${hardModeConfig ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
           <h2 className="text-sm font-semibold text-[#b0aea5] uppercase tracking-wider">Test Length</h2>
           <div className="grid grid-cols-3 gap-2">
             {([20, 35, 50] as const).map((len) => (
@@ -319,10 +341,14 @@ function TestContent() {
 
         <HapticButton
           variant="primary"
-          className="w-full py-5 text-lg mt-4"
-          onClick={() => startTest('normal')}
+          className="w-full py-4 text-base"
+          onClick={() => startTest(hardModeConfig ? 'hard' : 'normal')}
         >
-          Start Test
+          {hardModeConfig ? (
+            <span className="flex items-center justify-center gap-2"><Zap className="w-4 h-4" /> Start Hard Mode</span>
+          ) : (
+            'Start Test'
+          )}
         </HapticButton>
       </div>
     </div>

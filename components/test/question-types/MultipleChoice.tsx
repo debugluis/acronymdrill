@@ -28,7 +28,7 @@ export function MultipleChoice({ question, onAnswer, answered, selectedAnswer }:
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4 justify-center">
+    <div className="flex flex-col flex-1 px-4 py-4 gap-4 justify-center">
       {/* Prompt */}
       <div className="text-center">
         {isType1 ? (

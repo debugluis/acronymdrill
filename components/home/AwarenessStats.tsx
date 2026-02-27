@@ -16,6 +16,7 @@ function formatTime(minutes: number): string {
 }
 
 const DAY_KEYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
 export function AwarenessStats({
   progressMap,
@@ -53,13 +54,13 @@ export function AwarenessStats({
         </div>
       </div>
 
-      {/* Weekly activity — 7 minimal dots, no labels */}
+      {/* Weekly activity — dots with day letter labels */}
       <div className="flex gap-2 justify-center py-1">
-        {DAY_KEYS.map((key) => (
-          <div
-            key={key}
-            className={`w-2 h-2 rounded-full ${weeklyActivity[key] ? 'bg-[#d97757]' : 'bg-[#e8e6dc30]'}`}
-          />
+        {DAY_KEYS.map((key, i) => (
+          <div key={key} className="flex flex-col items-center gap-0.5">
+            <div className={`w-2 h-2 rounded-full ${weeklyActivity[key] ? 'bg-[#d97757]' : 'bg-[#e8e6dc30]'}`} />
+            <span className="text-[9px] text-[#b0aea5]">{DAY_LABELS[i]}</span>
+          </div>
         ))}
       </div>
     </div>

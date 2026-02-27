@@ -134,12 +134,12 @@ export default function TrainPage() {
         <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Choose Training Mode</h1>
       </header>
 
-      <div className="flex-1 flex flex-col justify-center px-6 gap-4">
+      <div className="flex-1 flex flex-col px-6 pt-8 gap-4">
         <p className="text-[#b0aea5] text-sm text-center">
           Each session covers 20 cards. Swipe right if you&apos;re confident, left if you need more practice.
         </p>
 
-        <div className="space-y-4 mt-4">
+        <div className="space-y-4 mt-2">
           <button
             onClick={() => startTraining('random')}
             className="w-full bg-[#1c1c1a] border border-[#e8e6dc20] rounded-2xl p-5 text-left hover:border-[#d97757] transition-colors"

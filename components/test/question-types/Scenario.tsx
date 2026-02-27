@@ -26,7 +26,7 @@ export function Scenario({ question, onAnswer, answered, selectedAnswer }: Scena
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4 justify-center">
+    <div className="flex flex-col flex-1 px-4 py-4 gap-4 justify-center">
       <div className="text-center">
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-2">Scenario — pick the best answer</p>
       </div>

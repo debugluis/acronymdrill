@@ -4,6 +4,7 @@ import { AcronymEntry } from '@/types'
 import { Badge } from '@/components/ui/Badge'
 import { BottomSheet } from '@/components/ui/BottomSheet'
 import { autoPlayPhonetic, speakPhonetic } from '@/lib/speech'
+import { auth } from '@/lib/firebase'
 import { Star, Lightbulb, Globe, GraduationCap, AlertTriangle, Volume2, Sparkles } from 'lucide-react'
 
 interface AcronymCardProps {
@@ -27,9 +28,13 @@ export function AcronymCard({ entry, isNew }: AcronymCardProps) {
     setExplanation('')
     setLoadingExplain(true)
     try {
+      const token = await auth.currentUser?.getIdToken()
       const res = await fetch('/api/explain', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ id: entry.id, fullName: entry.fullName }),
       })
       const data = await res.json()

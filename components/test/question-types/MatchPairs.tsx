@@ -83,7 +83,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-3 justify-center">
+    <div className="flex flex-col flex-1 px-4 py-4 gap-3 justify-center">
       <div className="text-center">
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-0.5">Match each acronym to its meaning</p>
         <p className="text-xs text-[#b0aea5]">Tap either side first, then tap its match</p>
