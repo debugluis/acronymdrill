@@ -196,7 +196,7 @@ export function generateQuestion(
           type,
           acronym,
           correctAnswer: 'true',
-          options: [`${acronym.id} = ${acronym.fullName}`],
+          options: [`${acronym.id}: ${acronym.fullName}`],
         }
       } else {
         const wrong = getSmartDistractors(acronym, allAcronyms, 1, 'fullName')[0]
@@ -204,7 +204,7 @@ export function generateQuestion(
           type,
           acronym,
           correctAnswer: 'false',
-          options: [`${acronym.id} = ${wrong.fullName}`],
+          options: [`${acronym.id}: ${wrong.fullName}`],
         }
       }
     }
