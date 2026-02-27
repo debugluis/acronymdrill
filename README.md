@@ -1,43 +1,25 @@
 # AcronymDrill
 
-Personal study app for CompTIA Security+ SY0-701 acronyms.
+**Live:** https://acronymdrill.vercel.app
 
-## What it does
-- Trains you on all ~200 official SY0-701 acronyms
-- Tracks your mastery per acronym, by domain, by category
-- Three modes: Training (cards), Normal Test, Hard Mode
-- PWA — installs on iPhone via Safari "Add to Home Screen"
-- Syncs progress across devices via Firebase
+AcronymDrill is a mobile-first PWA built to drill every acronym on the CompTIA Security+ SY0-701 exam. The app tracks how well you know each acronym individually — not just your overall score — and surfaces the ones you keep getting wrong. The more you miss something, the more it shows up. Over time, the weak spots shrink and your mastery score climbs toward exam-ready.
+
+It works as a study companion for the last few weeks before the exam: quick training sessions on your phone, adaptive tests that punish guessing, and AI-generated explanations when something doesn't click.
+
+## Features
+
+- **311 acronyms** across all 5 SY0-701 domains
+- **Training mode** — swipe cards (left = practice, right = confident), random or reinforcement-focused
+- **Test mode** — 6 question types (MCQ, true/false, match pairs, fill-in-blank, scenario), 20/35/50 questions
+- **Hard mode** — weighted selection by weakness score, harder question type distribution
+- **Progress tracking** — mastery levels, weakness scores, streak, domain breakdown
+- **AI explanations** — per-acronym explanation via Claude API (authenticated)
+- **PWA** — installable on iOS (Safari) and Android (Chrome), offline-capable
 
 ## Stack
-Next.js 14 · TypeScript · Tailwind CSS · Firebase · Anthropic Claude API
 
-## Local Development
+Next.js 14 · TypeScript · Tailwind CSS · Firebase Auth + Firestore · Anthropic Claude API · Vercel
 
-### Prerequisites
-- Node.js 20+
-- WSL (Windows Subsystem for Linux) or macOS/Linux
+---
 
-### Setup
-1. Clone the repo
-2. Copy `.env.local.example` to `.env.local` and fill in your keys
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run development server:
-   ```
-   npm run dev
-   ```
-5. Open http://localhost:3000
-
-### Environment Variables
-See `.env.local.example` for required variables.
-Firebase config values come from Firebase Console → Project Settings → Your apps.
-Anthropic API key from console.anthropic.com.
-
-## Deploy
-Deployed to Vercel. Push to main branch triggers automatic deployment.
-
-## Study Notes
-This app is for personal use only. Not affiliated with CompTIA.
+*Personal study tool. Not affiliated with CompTIA.*
