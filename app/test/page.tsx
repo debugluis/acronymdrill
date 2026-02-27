@@ -129,7 +129,7 @@ function TestContent() {
       )
 
       if (correct) {
-        setTimeout(() => advanceQuestion(), 1500)
+        setTimeout(() => advanceQuestion(), 600)
       } else {
         setPhase('wrong-answer')
       }

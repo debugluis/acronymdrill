@@ -1148,14 +1148,14 @@ export const acronyms: AcronymEntry[] = [
     confusedWith: ['IAM'],
   },
   {
-    id: 'PCIDSS',
+    id: 'PCI-DSS',
     fullName: 'Payment Card Industry Data Security Standard',
     phonetic: 'pee-see-eye-dee-es-es',
     domain: 5,
     category: 'standard',
     difficulty: 1,
-    mnemonic: 'PCI DSS = the security rulebook for anyone touching credit card data — 12 requirements that protect cardholder information',
-    realWorldExample: 'A retailer undergoes a PCI DSS audit to verify they encrypt cardholder data, maintain firewalls, and have no default passwords on systems.',
+    mnemonic: 'PCI-DSS = the security rulebook for anyone touching credit card data — 12 requirements that protect cardholder information',
+    realWorldExample: 'A retailer undergoes a PCI-DSS audit to verify they encrypt cardholder data, maintain firewalls, and have no default passwords on systems.',
     examTip: 'PCI DSS has 12 requirements. Not a law, but contractual obligation from card brands. Applies to any org that stores, processes, or transmits cardholder data.',
   },
   {

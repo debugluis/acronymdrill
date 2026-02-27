@@ -36,7 +36,7 @@ export default function HomePage() {
     const dismissed = localStorage.getItem('install-banner-dismissed')
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches
     if (!dismissed && !isStandalone) {
-      setTimeout(() => setShowInstallBanner(true), 2000)
+      setTimeout(() => setShowInstallBanner(true), 800)
     }
   }, [])
 
@@ -145,9 +145,13 @@ export default function HomePage() {
           progressMap={progressMap}
           totalAcronyms={total}
           totalStudyMinutes={profile?.totalStudyMinutes ?? 0}
-          weeklyActivity={profile?.weeklyActivity ?? {
-            mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false,
-          }}
+          weeklyActivity={(() => {
+            const empty = { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false }
+            if (!profile?.lastActiveDate) return empty
+            const lastActive = profile.lastActiveDate
+            const getMonday = (d: Date) => { const dt = new Date(d); const day = dt.getDay(); dt.setDate(dt.getDate() - (day === 0 ? 6 : day - 1)); dt.setHours(0,0,0,0); return dt.getTime() }
+            return getMonday(lastActive) < getMonday(new Date()) ? empty : (profile.weeklyActivity ?? empty)
+          })()}
         />
       </main>
 

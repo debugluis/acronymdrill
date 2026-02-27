@@ -26,11 +26,11 @@ export function QuestionRenderer({ question, onAnswer, answered, selectedAnswer 
         />
       )
     case 3:
-      return <SwipeTrueFalse question={question} onAnswer={onAnswer} />
+      return <SwipeTrueFalse key={question.acronym.id} question={question} onAnswer={onAnswer} />
     case 4:
-      return <MatchPairs question={question} onAnswer={onAnswer} />
+      return <MatchPairs key={question.acronym.id} question={question} onAnswer={onAnswer} />
     case 5:
-      return <FillBlank question={question} onAnswer={onAnswer} />
+      return <FillBlank key={question.acronym.id} question={question} onAnswer={onAnswer} />
     case 6:
       return (
         <Scenario

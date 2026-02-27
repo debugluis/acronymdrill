@@ -15,44 +15,62 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
     pairs.map((p) => p.right).sort(() => Math.random() - 0.5)
   )
 
-  const [selectedAcronym, setSelectedAcronym] = useState<string | null>(null)
+  const [selectedAcr, setSelectedAcr] = useState<string | null>(null)
+  const [selectedDef, setSelectedDef] = useState<string | null>(null)
   const [matched, setMatched] = useState<Record<string, string>>({})
   const [wrong, setWrong] = useState<{ acr: string; def: string } | null>(null)
   const [done, setDone] = useState(false)
 
   const correctMap = Object.fromEntries(pairs.map((p) => [p.left, p.right]))
 
-  const handleAcronymClick = (acr: string) => {
-    if (done || matched[acr]) return
-    setSelectedAcronym(acr)
-  }
-
-  const handleDefClick = (def: string) => {
-    if (done || !selectedAcronym) return
-    const isCorrect = correctMap[selectedAcronym] === def
+  const tryMatch = (acr: string, def: string) => {
+    const isCorrect = correctMap[acr] === def
     if (isCorrect) {
-      const newMatched = { ...matched, [selectedAcronym]: def }
+      const newMatched = { ...matched, [acr]: def }
       setMatched(newMatched)
-      setSelectedAcronym(null)
+      setSelectedAcr(null)
+      setSelectedDef(null)
       hapticCorrect()
       if (Object.keys(newMatched).length === pairs.length) {
         setDone(true)
         onAnswer(true, 'all-correct')
       }
     } else {
-      setWrong({ acr: selectedAcronym, def })
+      setWrong({ acr, def })
       hapticWrong()
       setTimeout(() => {
         setWrong(null)
-        setSelectedAcronym(null)
-      }, 600)
+        setSelectedAcr(null)
+        setSelectedDef(null)
+      }, 400)
+    }
+  }
+
+  const handleAcronymClick = (acr: string) => {
+    if (done || matched[acr]) return
+    if (selectedDef !== null) {
+      setSelectedAcr(acr)
+      tryMatch(acr, selectedDef)
+    } else {
+      setSelectedAcr((prev) => (prev === acr ? null : acr))
+    }
+  }
+
+  const handleDefClick = (def: string) => {
+    if (done) return
+    if (Object.values(matched).includes(def)) return
+    if (selectedAcr !== null) {
+      setSelectedDef(def)
+      tryMatch(selectedAcr, def)
+    } else {
+      setSelectedDef((prev) => (prev === def ? null : def))
     }
   }
 
   const getAcrStyle = (acr: string) => {
     if (matched[acr]) return 'bg-[#788c5d]/20 border-[#788c5d] text-[#788c5d]'
     if (wrong?.acr === acr) return 'bg-[#c0392b]/20 border-[#c0392b] text-[#c0392b]'
-    if (selectedAcronym === acr) return 'bg-[#d97757]/20 border-[#d97757] text-[#d97757]'
+    if (selectedAcr === acr) return 'bg-[#d97757]/20 border-[#d97757] text-[#d97757]'
     return 'bg-[#1c1c1a] border-[#e8e6dc20] text-[#faf9f5]'
   }
 
@@ -60,6 +78,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
     const matchedAcr = Object.entries(matched).find(([, d]) => d === def)?.[0]
     if (matchedAcr) return 'bg-[#788c5d]/20 border-[#788c5d] text-[#788c5d]'
     if (wrong?.def === def) return 'bg-[#c0392b]/20 border-[#c0392b] text-[#c0392b]'
+    if (selectedDef === def) return 'bg-[#d97757]/20 border-[#d97757] text-[#d97757]'
     return 'bg-[#1c1c1a] border-[#e8e6dc20] text-[#faf9f5]'
   }
 
@@ -67,7 +86,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
     <div className="flex flex-col h-full px-4 py-4 gap-4">
       <div className="text-center">
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-1">Match each acronym to its meaning</p>
-        <p className="text-xs text-[#b0aea5]">Tap an acronym, then tap its definition</p>
+        <p className="text-xs text-[#b0aea5]">Tap either side first, then tap its match</p>
       </div>
       <div className="flex gap-3 flex-1">
         {/* Acronyms */}
@@ -76,7 +95,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
             <button
               key={acr}
               onClick={() => handleAcronymClick(acr)}
-              className={`w-full py-3 px-2 rounded-xl border text-sm font-bold font-sans transition-all ${getAcrStyle(acr)}`}
+              className={`flex-1 w-full px-2 rounded-xl border text-sm font-bold font-sans transition-all flex items-center justify-center ${getAcrStyle(acr)}`}
             >
               {acr}
             </button>
@@ -88,7 +107,7 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
             <button
               key={def}
               onClick={() => handleDefClick(def)}
-              className={`w-full py-3 px-2 rounded-xl border text-xs transition-all text-left leading-tight ${getDefStyle(def)}`}
+              className={`flex-1 w-full px-2 rounded-xl border text-xs transition-all text-left leading-tight flex items-center ${getDefStyle(def)}`}
             >
               {def}
             </button>

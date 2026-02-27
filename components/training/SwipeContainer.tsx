@@ -1,6 +1,6 @@
 'use client'
 import { useState, useRef } from 'react'
-import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence } from 'framer-motion'
+import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence, animate } from 'framer-motion'
 import { AcronymEntry } from '@/types'
 import { AcronymCard } from './AcronymCard'
 import { hapticCorrect, hapticWrong } from '@/lib/haptics'
@@ -23,13 +23,19 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
     const threshold = 80
     if (Math.abs(info.offset.x) > threshold) {
       const dir = info.offset.x > 0 ? 'right' : 'left'
-      handleSwipe(dir)
+      flyOffAndAdvance(dir)
     } else {
-      x.set(0)
+      animate(x, 0, { type: 'spring', stiffness: 400, damping: 30 })
     }
   }
 
-  const handleSwipe = (dir: 'left' | 'right') => {
+  const flyOffAndAdvance = (dir: 'left' | 'right') => {
+    animate(x, dir === 'right' ? 600 : -600, { duration: 0.25 }).then(() => {
+      advanceCard(dir)
+    })
+  }
+
+  const advanceCard = (dir: 'left' | 'right') => {
     const entry = entries[currentIndex]
     if (!entry) return
 
@@ -54,7 +60,7 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
       } else {
         setCurrentIndex(next)
       }
-    }, 350)
+    }, 200)
   }
 
   const current = entries[currentIndex]
@@ -88,7 +94,6 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
         <motion.div
           style={{ x, rotate, opacity }}
           drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={handleDragEnd}
           className="h-full cursor-grab active:cursor-grabbing"
           whileDrag={{ scale: 1.02 }}
@@ -100,13 +105,13 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
       {/* Manual swipe buttons */}
       <div className="flex gap-4 px-4 pb-4">
         <button
-          onClick={() => handleSwipe('left')}
+          onClick={() => flyOffAndAdvance('left')}
           className="flex-1 py-3 rounded-xl bg-[#c0392b]/20 border border-[#c0392b]/40 text-[#c0392b] font-semibold"
         >
           ← Needs Practice
         </button>
         <button
-          onClick={() => handleSwipe('right')}
+          onClick={() => flyOffAndAdvance('right')}
           className="flex-1 py-3 rounded-xl bg-[#788c5d]/20 border border-[#788c5d]/40 text-[#788c5d] font-semibold"
         >
           Confident →

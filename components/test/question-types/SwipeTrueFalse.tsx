@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { motion, PanInfo, useMotionValue, useTransform } from 'framer-motion'
+import { motion, PanInfo, useMotionValue, useTransform, animate } from 'framer-motion'
 import { Question } from '@/types'
 import { hapticCorrect, hapticWrong } from '@/lib/haptics'
 
@@ -20,11 +20,11 @@ export function SwipeTrueFalse({ question, onAnswer }: SwipeTrueFalseProps) {
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     if (answered) return
     if (info.offset.x > 80) {
-      submit('true')
+      animate(x, 600, { duration: 0.25 }).then(() => submit('true'))
     } else if (info.offset.x < -80) {
-      submit('false')
+      animate(x, -600, { duration: 0.25 }).then(() => submit('false'))
     } else {
-      x.set(0)
+      animate(x, 0, { type: 'spring', stiffness: 400, damping: 30 })
     }
   }
 
@@ -60,7 +60,6 @@ export function SwipeTrueFalse({ question, onAnswer }: SwipeTrueFalseProps) {
         <motion.div
           style={{ x, rotate }}
           drag={answered ? false : 'x'}
-          dragConstraints={{ left: 0, right: 0 }}
           onDragEnd={handleDragEnd}
           className="w-full max-w-sm bg-[#1c1c1a] rounded-2xl p-6 border border-[#e8e6dc20] cursor-grab active:cursor-grabbing"
           whileDrag={{ scale: 1.02 }}

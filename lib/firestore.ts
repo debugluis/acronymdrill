@@ -64,11 +64,31 @@ export async function createOrUpdateUserProfile(
   }
 }
 
+function getWeekStart(d: Date): number {
+  const date = new Date(d)
+  const day = date.getDay()
+  const diff = day === 0 ? -6 : 1 - day // back to Monday
+  date.setDate(date.getDate() + diff)
+  date.setHours(0, 0, 0, 0)
+  return date.getTime()
+}
+
 export async function updateWeeklyActivity(userId: string): Promise<void> {
   const days = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
   const today = days[new Date().getDay()]
   const ref = doc(db, 'users', userId)
-  await updateDoc(ref, { [`weeklyActivity.${today}`]: true, lastActiveDate: serverTimestamp() })
+  const snap = await getDoc(ref)
+  const lastActive = snap.data()?.lastActiveDate?.toDate?.() as Date | undefined
+  const isNewWeek = !lastActive || getWeekStart(lastActive) < getWeekStart(new Date())
+
+  if (isNewWeek) {
+    await updateDoc(ref, {
+      weeklyActivity: { mon: false, tue: false, wed: false, thu: false, fri: false, sat: false, sun: false, [today]: true },
+      lastActiveDate: serverTimestamp(),
+    })
+  } else {
+    await updateDoc(ref, { [`weeklyActivity.${today}`]: true, lastActiveDate: serverTimestamp() })
+  }
 }
 
 // --- Acronym Progress ---

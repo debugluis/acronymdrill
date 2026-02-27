@@ -7,7 +7,7 @@ export function speakPhonetic(phonetic: string) {
   window.speechSynthesis.speak(utterance)
 }
 
-export function autoPlayPhonetic(phonetic: string, delay = 300) {
+export function autoPlayPhonetic(phonetic: string, delay = 150) {
   if (typeof window === 'undefined' || !window.speechSynthesis) return
   setTimeout(() => {
     window.speechSynthesis.cancel()

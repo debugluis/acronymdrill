@@ -102,21 +102,81 @@ export function selectHardModeAcronyms(
   return selected.slice(0, count)
 }
 
+function sanitizeScenarioText(text: string, acronymId: string): string {
+  const escaped = acronymId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const regex = new RegExp(`\\b${escaped}\\b`, 'gi')
+  return text.replace(regex, '[___]')
+}
+
+function scoreDistractorSimilarity(
+  target: AcronymEntry,
+  candidate: AcronymEntry,
+  mode: 'id' | 'fullName'
+): number {
+  let score = 0
+
+  // Explicitly marked as confusable — highest priority
+  if (target.confusedWith?.includes(candidate.id)) score += 20
+  if (candidate.confusedWith?.includes(target.id)) score += 20
+
+  // Same category and domain
+  if (candidate.category === target.category) score += 5
+  if (candidate.domain === target.domain) score += 2
+
+  if (mode === 'id') {
+    // Shared leading characters in the acronym string
+    let prefix = 0
+    for (let i = 0; i < Math.min(target.id.length, candidate.id.length); i++) {
+      if (target.id[i] === candidate.id[i]) prefix++
+      else break
+    }
+    score += prefix * 3
+
+    // Shared characters overall (e.g. DNS vs DNSSEC share D,N,S)
+    const targetChars = new Set(target.id.split(''))
+    score += candidate.id.split('').filter((c) => targetChars.has(c)).length
+  } else {
+    // Shared meaningful words in the full name (ignore short words)
+    const targetWords = new Set(
+      target.fullName.toLowerCase().split(/[\s,/-]+/).filter((w) => w.length > 2)
+    )
+    const sharedWords = candidate.fullName
+      .toLowerCase()
+      .split(/[\s,/-]+/)
+      .filter((w) => targetWords.has(w)).length
+    score += sharedWords * 4
+  }
+
+  return score
+}
+
+function getSmartDistractors(
+  target: AcronymEntry,
+  allAcronyms: AcronymEntry[],
+  count: number,
+  mode: 'id' | 'fullName'
+): AcronymEntry[] {
+  const scored = allAcronyms
+    .filter((a) => a.id !== target.id)
+    .map((candidate) => ({ candidate, score: scoreDistractorSimilarity(target, candidate, mode) }))
+    .sort((a, b) => b.score - a.score)
+
+  // Take the top similar pool then shuffle within it for variety
+  const poolSize = Math.min(count * 4, scored.length)
+  const topPool = scored.slice(0, poolSize)
+  const shuffled = [...topPool].sort(() => Math.random() - 0.5)
+  return shuffled.slice(0, count).map((s) => s.candidate)
+}
+
 export function generateQuestion(
   acronym: AcronymEntry,
   allAcronyms: AcronymEntry[],
   type: QuestionType
 ): Question {
-  const getRandomOthers = (exclude: string, count: number): AcronymEntry[] => {
-    const others = allAcronyms.filter((a) => a.id !== exclude)
-    const shuffled = others.sort(() => Math.random() - 0.5)
-    return shuffled.slice(0, count)
-  }
-
   switch (type) {
     case 1: {
       // Acronym → Full Name
-      const others = getRandomOthers(acronym.id, 3)
+      const others = getSmartDistractors(acronym, allAcronyms, 3, 'fullName')
       const options = [acronym.fullName, ...others.map((o) => o.fullName)].sort(
         () => Math.random() - 0.5
       )
@@ -124,7 +184,7 @@ export function generateQuestion(
     }
     case 2: {
       // Full Name → Acronym
-      const others = getRandomOthers(acronym.id, 3)
+      const others = getSmartDistractors(acronym, allAcronyms, 3, 'id')
       const options = [acronym.id, ...others.map((o) => o.id)].sort(() => Math.random() - 0.5)
       return { type, acronym, options, correctAnswer: acronym.id }
     }
@@ -139,7 +199,7 @@ export function generateQuestion(
           options: [`${acronym.id} = ${acronym.fullName}`],
         }
       } else {
-        const wrong = getRandomOthers(acronym.id, 1)[0]
+        const wrong = getSmartDistractors(acronym, allAcronyms, 1, 'fullName')[0]
         return {
           type,
           acronym,
@@ -150,7 +210,7 @@ export function generateQuestion(
     }
     case 4: {
       // Match Pairs
-      const others = getRandomOthers(acronym.id, 3)
+      const others = getSmartDistractors(acronym, allAcronyms, 3, 'fullName')
       const pairs = [acronym, ...others].map((a) => ({ left: a.id, right: a.fullName }))
       const shuffledPairs = pairs.sort(() => Math.random() - 0.5)
       return { type, acronym, pairItems: shuffledPairs, correctAnswer: acronym.fullName }
@@ -161,14 +221,14 @@ export function generateQuestion(
     }
     case 6: {
       // Scenario
-      const others = getRandomOthers(acronym.id, 3)
+      const others = getSmartDistractors(acronym, allAcronyms, 3, 'id')
       const options = [acronym.id, ...others.map((o) => o.id)].sort(() => Math.random() - 0.5)
       return {
         type,
         acronym,
         options,
         correctAnswer: acronym.id,
-        scenarioText: acronym.realWorldExample,
+        scenarioText: sanitizeScenarioText(acronym.realWorldExample, acronym.id),
       }
     }
     default:
