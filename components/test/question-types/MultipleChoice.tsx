@@ -28,9 +28,9 @@ export function MultipleChoice({ question, onAnswer, answered, selectedAnswer }:
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4">
+    <div className="flex flex-col h-full px-4 py-4 gap-4 justify-center">
       {/* Prompt */}
-      <div className="text-center py-4">
+      <div className="text-center">
         {isType1 ? (
           <>
             <p className="text-xs text-[#b0aea5] mb-2 uppercase tracking-wide">What does this stand for?</p>
@@ -47,13 +47,13 @@ export function MultipleChoice({ question, onAnswer, answered, selectedAnswer }:
       </div>
 
       {/* Options */}
-      <div className="flex-1 flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {question.options?.map((option) => (
           <button
             key={option}
             onClick={() => handleSelect(option)}
             disabled={answered}
-            className={`w-full text-left px-4 py-4 rounded-xl border transition-all text-sm ${getOptionStyle(option)}`}
+            className={`w-full text-left px-4 py-3 rounded-xl border transition-all text-sm ${getOptionStyle(option)}`}
           >
             {option}
           </button>

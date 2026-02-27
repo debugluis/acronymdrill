@@ -83,36 +83,30 @@ export function MatchPairs({ question, onAnswer }: MatchPairsProps) {
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4">
+    <div className="flex flex-col h-full px-4 py-4 gap-3 justify-center">
       <div className="text-center">
-        <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-1">Match each acronym to its meaning</p>
+        <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-0.5">Match each acronym to its meaning</p>
         <p className="text-xs text-[#b0aea5]">Tap either side first, then tap its match</p>
       </div>
-      <div className="flex gap-3 flex-1">
-        {/* Acronyms */}
-        <div className="flex-1 flex flex-col gap-2">
-          {acronyms.map((acr) => (
+
+      {/* Row-based layout: each row has one acronym + one definition, ensuring vertical alignment */}
+      <div className="flex flex-col gap-2">
+        {pairs.map((_, i) => (
+          <div key={i} className="flex gap-3 h-16">
             <button
-              key={acr}
-              onClick={() => handleAcronymClick(acr)}
-              className={`flex-1 w-full px-2 rounded-xl border text-sm font-bold font-sans transition-all flex items-center justify-center ${getAcrStyle(acr)}`}
+              onClick={() => handleAcronymClick(acronyms[i])}
+              className={`flex-1 px-2 rounded-xl border text-sm font-bold font-sans transition-all flex items-center justify-center ${getAcrStyle(acronyms[i])}`}
             >
-              {acr}
+              {acronyms[i]}
             </button>
-          ))}
-        </div>
-        {/* Definitions */}
-        <div className="flex-1 flex flex-col gap-2">
-          {definitions.map((def) => (
             <button
-              key={def}
-              onClick={() => handleDefClick(def)}
-              className={`flex-1 w-full px-2 rounded-xl border text-xs transition-all text-left leading-tight flex items-center ${getDefStyle(def)}`}
+              onClick={() => handleDefClick(definitions[i])}
+              className={`flex-1 px-2 rounded-xl border text-xs transition-all text-left leading-tight flex items-center ${getDefStyle(definitions[i])}`}
             >
-              {def}
+              {definitions[i]}
             </button>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )

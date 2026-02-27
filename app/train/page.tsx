@@ -84,7 +84,7 @@ export default function TrainPage() {
 
   if (authLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#141413]">
+      <div className="flex items-center justify-center h-screen overflow-hidden bg-[#141413]">
         <div className="w-10 h-10 border-2 border-[#d97757] border-t-transparent rounded-full animate-spin" />
       </div>
     )
@@ -97,7 +97,7 @@ export default function TrainPage() {
 
   if (phase === 'complete') {
     return (
-      <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+      <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
           <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
           <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Training Complete</h1>
@@ -111,7 +111,7 @@ export default function TrainPage() {
 
   if (phase === 'training' && deck.length > 0) {
     return (
-      <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+      <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
           <button onClick={() => setPhase('select')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Back</button>
           <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Training</h1>
@@ -128,7 +128,7 @@ export default function TrainPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+    <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
       <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
         <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
         <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Choose Training Mode</h1>

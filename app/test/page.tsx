@@ -182,7 +182,7 @@ function TestContent() {
 
   if (authLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#141413]">
+      <div className="flex items-center justify-center h-screen overflow-hidden bg-[#141413]">
         <div className="w-10 h-10 border-2 border-[#d97757] border-t-transparent rounded-full animate-spin" />
       </div>
     )
@@ -201,7 +201,7 @@ function TestContent() {
       total: testState.domainBreakdown[d]?.total ?? 0,
     }))
     return (
-      <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+      <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
           <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Results</h1>
         </header>
@@ -220,7 +220,7 @@ function TestContent() {
   if (phase === 'wrong-answer' && testState) {
     const question = testState.questions[testState.currentIndex]
     return (
-      <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+      <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
           <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Incorrect</h1>
         </header>
@@ -237,7 +237,7 @@ function TestContent() {
     const remaining = testState.questions.length - testState.currentIndex
 
     return (
-      <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+      <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
         <header className="flex items-center px-4 py-3 border-b border-[#e8e6dc20] justify-between">
           <button
             onClick={() => {
@@ -272,7 +272,7 @@ function TestContent() {
 
   // Config screen
   return (
-    <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+    <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
       <header className="flex items-center px-4 py-4 border-b border-[#e8e6dc20] gap-3">
         <button onClick={() => router.push('/')} className="text-[#b0aea5] flex items-center gap-1"><ChevronLeft className="w-4 h-4" /> Home</button>
         <h1 className="text-lg font-semibold text-[#faf9f5] font-sans">Configure Test</h1>
@@ -332,7 +332,7 @@ function TestContent() {
 export default function TestPage() {
   return (
     <Suspense fallback={
-      <div className="flex items-center justify-center min-h-screen bg-[#141413]">
+      <div className="flex items-center justify-center h-screen overflow-hidden bg-[#141413]">
         <div className="w-10 h-10 border-2 border-[#d97757] border-t-transparent rounded-full animate-spin" />
       </div>
     }>

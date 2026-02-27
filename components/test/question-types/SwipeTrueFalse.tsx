@@ -37,7 +37,7 @@ export function SwipeTrueFalse({ question, onAnswer }: SwipeTrueFalseProps) {
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4">
+    <div className="flex flex-col h-full px-4 py-2 gap-3">
       <div className="text-center">
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide">True or False? Swipe to answer.</p>
       </div>

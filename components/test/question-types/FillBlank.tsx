@@ -25,8 +25,8 @@ export function FillBlank({ question, onAnswer }: FillBlankProps) {
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4">
-      <div className="text-center py-4">
+    <div className="flex flex-col h-full px-4 py-4 gap-4 justify-center">
+      <div className="text-center">
         <p className="text-xs text-[#b0aea5] mb-3 uppercase tracking-wide">Fill in the acronym</p>
         <div className="bg-[#1c1c1a] rounded-xl border border-[#e8e6dc20] p-5">
           <p className="text-xl font-semibold text-[#faf9f5]">

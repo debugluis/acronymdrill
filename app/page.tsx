@@ -97,7 +97,7 @@ export default function HomePage() {
   })
 
   return (
-    <div className="min-h-screen bg-[#141413] flex flex-col max-w-lg mx-auto">
+    <div className="h-screen overflow-hidden bg-[#141413] flex flex-col max-w-lg mx-auto">
       {showInstallBanner && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-[#d97757] text-white px-4 py-3 flex items-center justify-between text-sm max-w-lg mx-auto">
           <span className="flex items-center gap-2"><Smartphone className="w-4 h-4 flex-shrink-0" /> Tap Share → Add to Home Screen for the best experience</span>
@@ -105,7 +105,7 @@ export default function HomePage() {
         </div>
       )}
 
-      <header className="flex items-center justify-between px-4 py-4 border-b border-[#e8e6dc20]">
+      <header className="flex items-center justify-between px-4 py-3 border-b border-[#e8e6dc20]">
         <h1 className="text-xl font-bold text-[#d97757] font-sans">AcronymDrill</h1>
         <button
           onClick={() => setShowUserMenu(true)}
@@ -122,7 +122,7 @@ export default function HomePage() {
         </button>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-8">
+      <main className="flex-1 overflow-hidden flex flex-col">
         <ExamCountdown
           examDate={profile?.examDate}
           userId={user.uid}
@@ -137,9 +137,7 @@ export default function HomePage() {
 
         <DomainBreakdown stats={domainStats} />
 
-        <div className="my-4">
-          <QuickLaunch />
-        </div>
+        <QuickLaunch />
 
         <AwarenessStats
           progressMap={progressMap}

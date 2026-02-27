@@ -14,13 +14,13 @@ export async function POST(req: NextRequest) {
     }
 
     const message = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
-      max_tokens: 128,
+      model: 'claude-sonnet-4-6',
+      max_tokens: 180,
       messages: [
         {
           role: 'user',
           content: `You are a CompTIA Security+ SY0-701 study assistant.
-Re-explain ${id} (${fullName}) in exactly 2 short sentences: one defining what the letters mean, one combining a quick example and its exam relevance.
+Re-explain ${id} (${fullName}) in exactly 2 short sentences: one defining what the letters mean in a simple, easy-to-remember way (use an analogy or plain language — avoid jargon), one combining a quick example and its exam relevance.
 No headers. No filler.`,
         },
       ],

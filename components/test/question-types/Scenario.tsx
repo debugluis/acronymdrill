@@ -26,7 +26,7 @@ export function Scenario({ question, onAnswer, answered, selectedAnswer }: Scena
   }
 
   return (
-    <div className="flex flex-col h-full px-4 py-4 gap-4">
+    <div className="flex flex-col h-full px-4 py-4 gap-4 justify-center">
       <div className="text-center">
         <p className="text-xs text-[#b0aea5] uppercase tracking-wide mb-2">Scenario — pick the best answer</p>
       </div>
@@ -34,13 +34,13 @@ export function Scenario({ question, onAnswer, answered, selectedAnswer }: Scena
         <p className="text-[#faf9f5] text-sm leading-relaxed">{question.scenarioText}</p>
         <p className="text-[#6a9bcc] text-xs mt-2">Which technology best applies here?</p>
       </div>
-      <div className="flex-1 flex flex-col gap-3">
+      <div className="flex flex-col gap-3">
         {question.options?.map((option) => (
           <button
             key={option}
             onClick={() => handleSelect(option)}
             disabled={answered}
-            className={`w-full text-left px-4 py-4 rounded-xl border transition-all font-bold font-sans text-lg ${getOptionStyle(option)}`}
+            className={`w-full text-left px-4 py-3 rounded-xl border transition-all font-bold font-sans text-base ${getOptionStyle(option)}`}
           >
             {option}
           </button>

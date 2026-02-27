@@ -1,6 +1,6 @@
 'use client'
-import { useState, useRef } from 'react'
-import { motion, PanInfo, useMotionValue, useTransform, AnimatePresence, animate } from 'framer-motion'
+import { useState } from 'react'
+import { motion, PanInfo, useMotionValue, useTransform, animate } from 'framer-motion'
 import { AcronymEntry } from '@/types'
 import { AcronymCard } from './AcronymCard'
 import { hapticCorrect, hapticWrong } from '@/lib/haptics'
@@ -18,6 +18,19 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
   const x = useMotionValue(0)
   const rotate = useTransform(x, [-200, 200], [-15, 15])
   const opacity = useTransform(x, [-200, 0, 200], [0.5, 1, 0.5])
+  const leftGlow = useTransform(x, [-180, 0], [0.22, 0])
+  const rightGlow = useTransform(x, [0, 180], [0, 0.22])
+  const boxShadow = useTransform(
+    x,
+    [-200, -30, 0, 30, 200],
+    [
+      '0 0 60px 18px rgba(192,57,43,0.5)',
+      '0 0 20px 6px rgba(192,57,43,0.2)',
+      '0 0 0px 0px rgba(0,0,0,0)',
+      '0 0 20px 6px rgba(120,140,93,0.2)',
+      '0 0 60px 18px rgba(120,140,93,0.5)',
+    ]
+  )
 
   const handleDragEnd = (_: unknown, info: PanInfo) => {
     const threshold = 80
@@ -67,7 +80,7 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
   if (!current) return null
 
   return (
-    <div className="relative flex-1 flex flex-col">
+    <div className="relative flex-1 flex flex-col overflow-hidden">
       {/* Flash overlay */}
       {flashColor && (
         <div
@@ -89,33 +102,27 @@ export function SwipeContainer({ entries, onSwipe, onComplete }: SwipeContainerP
         </div>
       </div>
 
-      {/* Card */}
-      <div className="flex-1 p-4">
+      {/* Card with aura */}
+      <div className="flex-1 p-3 min-h-0">
         <motion.div
-          style={{ x, rotate, opacity }}
+          style={{ x, rotate, opacity, boxShadow }}
           drag="x"
           onDragEnd={handleDragEnd}
-          className="h-full cursor-grab active:cursor-grabbing"
+          className="h-full cursor-grab active:cursor-grabbing relative"
           whileDrag={{ scale: 1.02 }}
         >
+          {/* Red aura overlay — left swipe */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none z-10"
+            style={{ backgroundColor: '#c0392b', opacity: leftGlow }}
+          />
+          {/* Green aura overlay — right swipe */}
+          <motion.div
+            className="absolute inset-0 rounded-2xl pointer-events-none z-10"
+            style={{ backgroundColor: '#4d7a2a', opacity: rightGlow }}
+          />
           <AcronymCard entry={current} isNew={true} />
         </motion.div>
-      </div>
-
-      {/* Manual swipe buttons */}
-      <div className="flex gap-4 px-4 pb-4">
-        <button
-          onClick={() => flyOffAndAdvance('left')}
-          className="flex-1 py-3 rounded-xl bg-[#c0392b]/20 border border-[#c0392b]/40 text-[#c0392b] font-semibold"
-        >
-          ← Needs Practice
-        </button>
-        <button
-          onClick={() => flyOffAndAdvance('right')}
-          className="flex-1 py-3 rounded-xl bg-[#788c5d]/20 border border-[#788c5d]/40 text-[#788c5d] font-semibold"
-        >
-          Confident →
-        </button>
       </div>
     </div>
   )
