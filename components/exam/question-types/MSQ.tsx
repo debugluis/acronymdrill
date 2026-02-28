@@ -40,7 +40,7 @@ export function MSQ({ question, onAnswer }: MSQProps) {
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <p className="text-[#faf9f5] text-base leading-relaxed">{question.stem}</p>
-        <p className="text-[#b0aea5] text-xs">
+        <p className="text-[#d97757] text-xs font-semibold">
           Select {displayCount} — {selected.size}/{requiredCount} chosen
         </p>
         <div className="space-y-2">

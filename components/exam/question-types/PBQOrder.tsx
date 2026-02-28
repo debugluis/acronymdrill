@@ -80,7 +80,7 @@ export function PBQOrder({ question, onAnswer }: PBQOrderProps) {
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <p className="text-[#faf9f5] text-base leading-relaxed">{question.stem}</p>
-        <p className="text-[#b0aea5] text-xs">Drag to reorder, or use arrows. Submit when ready.</p>
+        <p className="text-[#d97757] text-xs font-semibold">Drag to reorder, or use arrows. Submit when ready.</p>
         <div className="space-y-2">
           {items.map((item, index) => (
             <div

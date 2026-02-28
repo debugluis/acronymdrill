@@ -67,7 +67,7 @@ export function PBQDrag({ question, onAnswer }: PBQDragProps) {
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
         <p className="text-[#faf9f5] text-base leading-relaxed">{question.stem}</p>
-        <p className="text-[#b0aea5] text-xs">Tap an item, then tap a zone to place it. Tap a placed item to remove it.</p>
+        <p className="text-[#d97757] text-xs font-semibold">Tap an item, then tap a zone to place it. Tap a placed item to remove it.</p>
 
         {/* Item pool */}
         {unassigned.length > 0 && (
